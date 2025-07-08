@@ -3,3 +3,70 @@
 *@
 @{
 }
+
+<h2>Listado de Medios</h2>
+
+<input type="text" id="busquedaTitulo" placeholder="Buscar por título" class="form-control mb-3" />
+<button id="btnBuscar" class="btn btn-primary">Buscar</button>
+
+<table class="table table-bordered" id="tablaMedios">
+    <thead>
+        <tr>
+            <th>Título</th>
+            <th>Descripción</th>
+            <th>Fecha Publicación</th>
+        </tr>
+    </thead>
+    <tbody>
+
+    </tbody>
+</table>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        var token = localStorage.getItem("jwtToken");
+        var token2 = "eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjIiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9lbWFpbGFkZHJlc3MiOiJtYW51ZWxqbnBAYWRtaW4uY29tIiwiZXhwIjoxNzUyMDE3MjMyfQ.DImNIanW6OC0GtBtOTtpxafeGYCBHU0Hp8UcElnD_Ew"; // puedes dejar el tuyo mientras pruebas
+
+        function cargarMedios(filtroTitulo = "") {
+            $.ajax({
+                url: "http://localhost:5075/api/Medio/GetAll",
+                type: "POST",
+                contentType: "application/json",
+                headers: {
+                    "Authorization": "Bearer " + token2
+                },
+                data: JSON.stringify({
+                    titulo: filtroTitulo,
+                    descripcion: "",
+                    fechaPublicacion: ""
+                }),
+                success: function (response) {
+                    var medios = response.objects;
+                    $("#tablaMedios tbody").empty(); // limpiar tabla
+
+                    $.each(medios, function (i, medio) {
+                        $("#tablaMedios tbody").append(
+                            "<tr><td>" + medio.titulo + "</td><td>" + medio.descripcion + "</td><td>" + medio.fechaPublicacion + "</td></tr>"
+                        );
+                    });
+                },
+                error: function (error) {
+                    console.log("Error al consumir el API:", error);
+                    console.log(error.responseText);
+                }
+            });
+        }
+
+        // 🔄 Carga automática al abrir la vista
+        cargarMedios(); // sin filtro
+
+        // 🕵️ Evento de búsqueda por título
+        $("#btnBuscar").click(function () {
+            var titulo = $("#busquedaTitulo").val();
+            cargarMedios(titulo);
+        });
+    });
+</script>
+

@@ -14,22 +14,19 @@ builder.Services.AddDbContext<JwtexamenBibliotecaContext>(options
 //3. Apuntamos a la interfaz y a la clase de BL. (paso 4 en Interfaz BL)
 builder.Services.AddScoped<BL.IMedio, BL.Medio>();
 
-/*
 
 //Lo de CORS
 builder.Services.AddCors(option =>
 {
     option.AddPolicy("MiPolicy", policy =>
     {
-        policy.WithOrigins("http://localhost:5075")
-
-        .AllowAnyOrigin()
+        policy.WithOrigins("http://localhost:5158")
 
         .AllowAnyMethod()
 
         .AllowAnyHeader();
     });
-});*/
+});
 
 // Add services to the container.
 
@@ -74,17 +71,19 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+//PIPELINE
+
 //Habilitar CORS
-// ========== SECCIÓN EQUIVALENTE A Configure ========== //
-/*app.UseCors("MiPolicy"); // Habilita CORS
+app.UseHttpsRedirection();
 app.UseRouting();
-app.MapControllers(); // Mapea endpoints de API*/
+
+app.UseCors("MiPolicy"); //Habilita CORS
 
 //Decirle a la app que utilice Authentication
 app.UseAuthentication();
 
 app.UseAuthorization();
 
-app.MapControllers();
+app.MapControllers();  //Mapea endpoints de API
 
 app.Run();

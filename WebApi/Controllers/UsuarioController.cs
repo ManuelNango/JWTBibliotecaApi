@@ -14,11 +14,13 @@ namespace WebApi.Controllers
     {
         private readonly DL.JwtexamenBibliotecaContext _context;
         private readonly Utilidades _utilidades;
+        //private readonly BL.IUsuario _Iusuario;
 
-        public UsuarioController(DL.JwtexamenBibliotecaContext context, Utilidades utilidades)
+        public UsuarioController(DL.JwtexamenBibliotecaContext context, Utilidades utilidades/*, BL.IUsuario iusuario*/)
         {
             _context = context;
             _utilidades = utilidades;
+            //_Iusuario = iusuario;
         }
 
         [HttpPost]
@@ -101,5 +103,87 @@ namespace WebApi.Controllers
                 return StatusCode(StatusCodes.Status200OK, new { isSuccess = true, token = _utilidades.GenerarJWT(usuarioEncontrado)});
             }
         }
+
+        /*[HttpPost]
+        [Route("GetAll")]
+        public IActionResult GetAll([FromBody] ML.Usuario usuario)
+        {
+            //medio.Titulo = "";
+            ML.Result result = _Iusuario.GetAll(usuario);
+
+            if (result.Correct)
+            {
+                //return StatusCode(StatusCodes.Status200OK, new { value = result);
+                return Ok(result);
+            }
+            else
+            {
+                //return StatusCode(StatusCodes.Status200OK, new { isSuccess = false, token = "" });
+                return StatusCode(500, result.ErrorMessage);
+            }
+        }
+
+        [HttpPost]
+        [Route("GetById/{idUsuario}")]
+        public IActionResult GetById(int idUsuario)
+        {
+            ML.Result result = _Iusuario.GetById(idUsuario);
+
+            if (result.Correct)
+            {
+                //return StatusCode(StatusCodes.Status200OK, new { value = result);
+                return Ok(result);
+            }
+            else
+            {
+                //return StatusCode(StatusCodes.Status200OK, new { isSuccess = false, token = "" });
+                return StatusCode(500, result.ErrorMessage);
+            }
+        }
+
+        [HttpPost("Add")]
+        public IActionResult Add([FromBody] ML.Usuario usuario)
+        {
+            ML.Result result = _Iusuario.Add(usuario);
+
+            if (result.Correct)
+            {
+                return Ok(result);
+            }
+            else
+            {
+                return StatusCode(500, result.ErrorMessage);
+            }
+        }
+
+        [HttpPut("Update")]
+        public IActionResult Update([FromBody] ML.Usuario usuario)
+        {
+            ML.Result result = _Iusuario.Update(usuario);
+
+            if (result.Correct)
+            {
+                return Ok(result);
+            }
+            else
+            {
+                return StatusCode(500, result.ErrorMessage);
+            }
+        }
+
+        [HttpDelete("Delete{idUsuario}")]
+        public IActionResult Delete(int idUsuario)
+        {
+            ML.Result result = _Iusuario.Delete(idUsuario);
+
+            if (result.Correct)
+            {
+                return Ok(result);
+            }
+            else
+            {
+                return StatusCode(500, result.ErrorMessage);
+            }
+        }*/
     }
 }

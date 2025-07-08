@@ -17,7 +17,6 @@ namespace ML
 
         //Propiedades de navegación
         public ML.Autor? Autor { get; set; }
-        public virtual ICollection<Autor> IdAutors { get; set; } = new List<Autor>();
         public ML.TipoMedio? TipoMedio { get; set; }
         public ML.Editorial? Editorial { get; set; }
         public ML.Area? Area { get; set; }

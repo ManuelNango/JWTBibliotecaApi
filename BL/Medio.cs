@@ -82,12 +82,13 @@ namespace BL
 
             try
             {
-                var query = _connection.Medios.FromSqlRaw($"MedioGetById {idMedio}").AsEnumerable().FirstOrDefault();
+                var query = _connection.MedioGetByIdSP.FromSqlInterpolated($"MedioGetById {idMedio}").AsEnumerable().FirstOrDefault();
 
                 if (query != null)
                 {
                     ML.Medio medio = new ML.Medio();
 
+                    medio.Autor = new ML.Autor();
                     medio.TipoMedio = new ML.TipoMedio();
                     medio.Editorial = new ML.Editorial();
                     medio.Area = new ML.Area();
@@ -96,15 +97,16 @@ namespace BL
                     medio.IdMedio = query.IdMedio;
                     medio.Titulo = query.Titulo;
                     medio.Descripcion = query.Descripcion;
-                    medio.FechaPublicacion = query.FechaPublicacion.ToString("dd/MM/yyyy");
-                    medio.ArchivoPDF = query.ArchivoPdf;
+                    medio.FechaPublicacion = query.FechaPublicacion;
+                    medio.ArchivoPDF = query.ArchivoPDF;
                     medio.ImagenPortada = query.ImagenPortada;
 
                     //Relaciones
-                    medio.TipoMedio.IdTipoMedio = query.IdTipoMedio.Value;
-                    medio.Editorial.IdEditorial = query.IdEditorial.Value;
-                    medio.Area.IdArea = query.IdArea.Value;
-                    medio.Idioma.IdIdioma = query.IdIdioma.Value;
+                    medio.Autor.IdAutor = query.IdAutor;
+                    medio.TipoMedio.IdTipoMedio = query.IdTipoMedio;
+                    medio.Editorial.IdEditorial = query.IdEditorial;
+                    medio.Area.IdArea = query.IdArea;
+                    medio.Idioma.IdIdioma = query.IdIdioma;
 
 
                     result.Object = medio;

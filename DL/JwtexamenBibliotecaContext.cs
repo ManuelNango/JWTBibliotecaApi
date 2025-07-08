@@ -46,6 +46,7 @@ public partial class JwtexamenBibliotecaContext : DbContext
     public virtual DbSet<UsuarioGetAllSP> UsuarioGetAllSP { get; set; }
     public virtual DbSet<AutorGetAllSP> AutorGetAllSP { get; set; }
     public virtual DbSet<MedioGetAllSP> MedioGetAllSP { get; set; }
+    public virtual DbSet<MedioGetByIdSP> MedioGetByIdSP { get; set; }
 
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -64,6 +65,11 @@ public partial class JwtexamenBibliotecaContext : DbContext
         });
 
         modelBuilder.Entity<AutorGetAllSP>(entity =>
+        {
+            entity.HasNoKey();
+        });
+
+        modelBuilder.Entity<MedioGetByIdSP>(entity =>
         {
             entity.HasNoKey();
         });
