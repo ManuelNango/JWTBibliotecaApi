@@ -27,10 +27,10 @@ namespace DL
         //Colonia
         public int IdColonia { get; set; }
         public string NombreColonia { get; set; } = null!;
+        public string CodigoPostal { get; set; } = null!;
 
         //Municipio
         public int IdMunicipio { get; set; }
-        public string CodigoPostal { get; set; } = null!;
         public string NombreMunicipio { get; set; } = null!;
 
         //Estado

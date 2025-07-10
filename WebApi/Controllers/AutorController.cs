@@ -7,23 +7,23 @@ namespace WebApi.Controllers
     [Route("api/[controller]")]
     [Authorize]
     [ApiController]
-    public class UsuarioController : ControllerBase
+    public class AutorController : ControllerBase
     {
         private readonly DL.JwtexamenBibliotecaContext _context;
-        private readonly BL.IUsuario _Iusuario;
+        private readonly BL.IAutor _Iautor;
 
-        public UsuarioController(DL.JwtexamenBibliotecaContext context, BL.IUsuario Iusuario)
+        public AutorController(DL.JwtexamenBibliotecaContext context, BL.IAutor Iautor)
         {
             _context = context;
-            _Iusuario = Iusuario;
+            _Iautor = Iautor;
         }
 
         [HttpPost]
         [Route("GetAll")]
-        public IActionResult GetAll([FromBody] ML.Usuario usuario)
+        public IActionResult GetAll([FromBody] ML.Autor autor)
         {
             //medio.Titulo = "";
-            ML.Result result = _Iusuario.GetAll(usuario);
+            ML.Result result = _Iautor.GetAll(autor);
 
             if (result.Correct)
             {
@@ -38,10 +38,10 @@ namespace WebApi.Controllers
         }
 
         [HttpPost]
-        [Route("GetById/{idUsuario}")]
-        public IActionResult GetById(int idUsuario)
+        [Route("GetById/{idAutor}")]
+        public IActionResult GetById(int idAutor)
         {
-            ML.Result result = _Iusuario.GetById(idUsuario);
+            ML.Result result = _Iautor.GetById(idAutor);
 
             if (result.Correct)
             {
@@ -56,9 +56,9 @@ namespace WebApi.Controllers
         }
 
         [HttpPost("Add")]
-        public IActionResult Add([FromBody] ML.Usuario usuario)
+        public IActionResult Add([FromBody] ML.Autor autor)
         {
-            ML.Result result = _Iusuario.Add(usuario);
+            ML.Result result = _Iautor.Add(autor);
 
             if (result.Correct)
             {
@@ -71,9 +71,9 @@ namespace WebApi.Controllers
         }
 
         [HttpPut("Update")]
-        public IActionResult Update([FromBody] ML.Usuario usuario)
+        public IActionResult Update([FromBody] ML.Autor autor)
         {
-            ML.Result result = _Iusuario.Update(usuario);
+            ML.Result result = _Iautor.Update(autor);
 
             if (result.Correct)
             {
@@ -85,10 +85,10 @@ namespace WebApi.Controllers
             }
         }
 
-        [HttpDelete("Delete{idUsuario}")]
-        public IActionResult Delete(int idUsuario)
+        [HttpDelete("Delete{idAutor}")]
+        public IActionResult Delete(int idAutor)
         {
-            ML.Result result = _Iusuario.Delete(idUsuario);
+            ML.Result result = _Iautor.Delete(idAutor);
 
             if (result.Correct)
             {

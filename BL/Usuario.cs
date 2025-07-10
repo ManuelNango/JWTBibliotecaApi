@@ -24,8 +24,9 @@ namespace BL
 
             try
             {
-                var query = _context.UsuarioGetAllSP.FromSqlInterpolated($"RestauranteGetAll '{usuarioObj.NombreCompleto}', {usuarioObj?.Rol?.IdRol}").ToList();
-
+                //var query = _context.UsuarioGetAllSP.FromSqlRaw($"UsuarioGetAll '', 0").ToList();
+                var query = _context.UsuarioGetAllSP.FromSqlRaw($"UsuarioGetAll '{usuarioObj.NombreCompleto}', {usuarioObj?.Rol?.IdRol}").ToList();
+                
                 if (query.Count > 0)
                 {
                     result.Objects = new List<object>();
@@ -52,18 +53,22 @@ namespace BL
                         usuario.Rol.Nombre = item.NombreRol;
 
                         //Dirección
+                        usuario.Direccion.IdDireccion = item.IdDireccion;
                         usuario.Direccion.Calle = item.Calle;
                         usuario.Direccion.NumeroInterior = item.NumeroInterior;
                         usuario.Direccion.NumeroExterior = item.NumeroExterior;
 
                         //Colonia
+                        usuario.Direccion.Colonia.IdColonia = item.IdColonia;
                         usuario.Direccion.Colonia.Nombre = item.NombreColonia;
                         usuario.Direccion.Colonia.CodigoPostal = item.CodigoPostal;
 
                         //Municipio
+                        usuario.Direccion.Colonia.Municipio.IdMunicipio = item.IdMunicipio;
                         usuario.Direccion.Colonia.Municipio.Nombre = item.NombreMunicipio;
 
                         //Estado
+                        usuario.Direccion.Colonia.Municipio.Estado.IdEstado = item.IdEstado;
                         usuario.Direccion.Colonia.Municipio.Estado.Nombre = item.NombreEstado;
 
                         result.Objects.Add(usuario);
@@ -189,7 +194,7 @@ namespace BL
             try
             {
                 var filasAfectadas = _context.Database.ExecuteSqlRaw
-                    ($"UsuarioAdd '{usuario.NombreCompleto}', '{usuario.Email}', '{usuario.Contrasena}', " +
+                    ($"UsuarioUpdate '{usuario.NombreCompleto}', '{usuario.Email}', '{usuario.Contrasena}', " +
                     $"{usuario.Rol.IdRol}, '{usuario.Direccion.Calle}', '{usuario.Direccion.NumeroInterior}', " +
                     $"'{usuario.Direccion.NumeroExterior}', {usuario.Direccion.Colonia.IdColonia}, {usuario.IdUsuario}");
 

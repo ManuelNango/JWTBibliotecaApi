@@ -11,9 +11,12 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<JwtexamenBibliotecaContext>(options
     => options.UseSqlServer(builder.Configuration.GetConnectionString("JWTExamenBiblioteca")));
 
-//3. Apuntamos a la interfaz y a la clase de BL. (paso 4 en Interfaz BL)
+//3. Apuntamos a la interfaz y a la clase de BL
 builder.Services.AddScoped<BL.IMedio, BL.Medio>();
 
+builder.Services.AddScoped<BL.IAutor, BL.Autor>();
+
+builder.Services.AddScoped<BL.IUsuario, BL.Usuario>();
 
 //Lo de CORS
 builder.Services.AddCors(option =>
